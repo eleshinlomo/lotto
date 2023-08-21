@@ -52,7 +52,7 @@ function App() {
     
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 
-    <main>
+    <main style={{marginTop: 3, marginBottom: 6}}>
 
     <div>
       <h1>FORCAST NUMBERS</h1>
@@ -72,13 +72,13 @@ function App() {
      <h2>Enter Previous Winning Numbers</h2>
        
      
-     <ul style={{display: 'flex', gap: 3, listStyle: 'none', color: 'green', fontWeight: 'bold', fontSize: 18}}>
+     <ul style={{display: 'flex', gap: 2, listStyle: 'none', color: 'green', fontWeight: 'bold', fontSize: 18}}>
      <li>Past Winning Numbers: </li>
-     <li>{num1}</li>
-     <li>{num2}</li>
-     <li>{num3}</li>
-     <li>{num4}</li>
-     <li>{num5}</li>
+     <li><span style={{color: 'green'}}>{num1}</span></li>
+     <li><span style={{color: 'red'}}>{num2}</span></li>
+     <li><span style={{color: 'green'}}>{num3}</span></li>
+     <li><span style={{color: 'red'}}>{num4}</span></li>
+     <li><span style={{color: 'green'}}>{num5}</span></li>
      </ul>
      
     
@@ -97,9 +97,9 @@ function App() {
     
      
 
-     <form>
+     <form style={{display: 'flex', flexDirection: 'column', width: 'auto'}}>
       <label for='Number 1'>Number 1</label><br/>
-      <input onChange={(e)=>setNum1(e.target.value)} value={num1} name={num1}  required/><br/>
+      <input  onChange={(e)=>setNum1(e.target.value)} value={num1} name={num1}  required/><br/>
       <label for='Number 2'>Number 2</label><br/>
       <input onChange={(e)=>setNum2(e.target.value)} value={num2} name={num2}  required/><br/>
       <label for='Number 3'>Number 3</label><br/>
@@ -139,7 +139,10 @@ function App() {
      </div> */}
      
 
-     <button onClick={getLottoCounter} style={{backgroundColor: 'green', color: 'white', padding:3, margin: 2}}>
+     <button onClick={getLottoCounter} style={{
+      backgroundColor: 'green', 
+      color: 'white', width:'100%', 
+      padding:14, marginTop: 3, marginBottom:3}}>
      PREDICT</button>
 
      

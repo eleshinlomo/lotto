@@ -12,7 +12,8 @@ function App() {
   const [num8, setNum8] = useState(0)
   const [num9, setNum9] = useState(0)
   const [num10, setNum10] = useState(0)
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState(null)
+  const [counters, setCounters] = useState([])
 
   const payload = {
     num1: parseInt(num1),
@@ -20,11 +21,11 @@ function App() {
     num3: parseInt(num3),
     num4: parseInt(num4),
     num5: parseInt(num5),
-    num6: parseInt(num6),
-    num7: parseInt(num7),
-    num8: parseInt(num8),
-    num9: parseInt(num9),
-    num10: parseInt(num10),
+    // num6: parseInt(num6),
+    // num7: parseInt(num7),
+    // num8: parseInt(num8),
+    // num9: parseInt(num9),
+    // num10: parseInt(num10),
   }
 
   const getLottoCounter = async ()=>{
@@ -39,8 +40,9 @@ function App() {
       return res.json()
     })
     .then((data)=>{
-      console.log(data.message)
+      console.log(data)
       setResults(data.message)
+      setCounters(data.counters)
     })
   }
 
@@ -48,16 +50,51 @@ function App() {
   
   return (
     
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+
+    <main>
+
     <div>
+      <h1>FORCAST NUMBERS</h1>
+
+      <div style={{color: 'red'}}>
+      <h2>Forcast based on past winning numbers</h2>
+      {results ?
+      <div>
+      <h1>{results}</h1>
+      </div>: <h1>NONE</h1>
+      }
+     </div>
+     
+    </div>
 
     <div>
      <h2>Enter Previous Winning Numbers</h2>
-     {num1}
-     {num2}
-     {num3}
-     {num4}
-     {num5}
+       
+     
+     <ul style={{display: 'flex', gap: 3, listStyle: 'none', color: 'green', fontWeight: 'bold', fontSize: 18}}>
+     <li>Past Winning Numbers: </li>
+     <li>{num1}</li>
+     <li>{num2}</li>
+     <li>{num3}</li>
+     <li>{num4}</li>
+     <li>{num5}</li>
+     </ul>
+     
+    
+    { counters? 
+     
+     <div>
+     {counters.map((counter)=>
+     <ul style={{display: 'flex', gap: 3, listStyle: 'none', color: 'red', fontWeight: 'bold', fontSize: 18}}>
+     <li>Counter: </li>
+     <li>{counter}</li>
+     
+     </ul>)}
 
+     </div>:null
+    }
+    
      
 
      <form>
@@ -103,13 +140,11 @@ function App() {
      
 
      <button onClick={getLottoCounter} style={{backgroundColor: 'green', color: 'white', padding:3, margin: 2}}>
-     SHOW COUNTERS</button>
-
-     <div style={{color: 'red'}}>
-      <h2>{results}</h2>
-     </div>
+     PREDICT</button>
 
      
+
+     </main>
 
 
     </div>

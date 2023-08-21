@@ -28,10 +28,10 @@ function App() {
   }
 
   const getLottoCounter = async ()=>{
-    await fetch('http://127.0.0.1:8000/api/lotto/', {
+    await fetch('https://web-production-fffb.up.railway.app/api/lotto/', {
       method: 'POST',
       mode: 'cors',
-      headers: {"Content-Type": 'application/json'},
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify(payload)
     })
     .then((res)=>{

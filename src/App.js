@@ -28,8 +28,20 @@ function App() {
     // num10: parseInt(num10),
   }
 
+   // URLs
+
+   const BASE_URL = process.env.REACT_APP_BASE_URL
+   const BASE_ENDPOINT = {
+     something: `${BASE_URL}/api/lotto/`
+   }
+  
+   const LOCAL_HOST_URL = process.env.REACT_APP_LOCAL_HOST_URL
+   const LOCAL_ENDPOINT = {
+     something: `${LOCAL_HOST_URL}/api/lotto/`
+   }
+
   const getLottoCounter = async ()=>{
-    await fetch('https://web-production-fffb.up.railway.app/api/lotto/', {
+    await fetch(BASE_ENDPOINT.something, {
       method: 'POST',
       mode: 'cors',
       headers: {"Content-Type": "application/json"},

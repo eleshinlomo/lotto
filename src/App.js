@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from 'react'
+import {ThemeProvider, Typography, createTheme, Box, TextField, Button, Grid} from '@mui/material'
+import PaidIcon from '@mui/icons-material/Paid';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import Nav from './components/Nav'
+import Footer from './components/Footer';
+
+
 
 function App() {
 
-  const [num1, setNum1] = useState(0)
-  const [num2, setNum2] = useState(0)
-  const [num3, setNum3] = useState(0)
-  const [num4, setNum4] = useState(0)
-  const [num5, setNum5] = useState(0)
+  const [num1, setNum1] = useState(null)
+  const [num2, setNum2] = useState(null)
+  const [num3, setNum3] = useState(null)
+  const [num4, setNum4] = useState(null)
+  const [num5, setNum5] = useState(null)
   const [num6, setNum6] = useState(0)
   const [num7, setNum7] = useState(0)
   const [num8, setNum8] = useState(0)
@@ -58,43 +65,65 @@ function App() {
     })
   }
 
-    
+    const theme = createTheme({
+      palette: {
+        mode: 'dark'
+      }
+    })
   
   return (
-    
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-
-    <main style={{marginTop: 3, marginBottom: 6}}>
-
     <div>
-      <h1>FORCAST NUMBERS</h1>
+    
+    <ThemeProvider theme={theme}>
+    <Nav />
+    
+    <Grid container spacing={2} sx={{
+    display: 'flex', 
+    flexDirection: 'column', 
+    justifyContent: 'center',
+    alignItems: 'center'
+    }}>
 
-      <div style={{color: 'red'}}>
-      <h2>Forcast based on past winning numbers</h2>
+
+    <Grid item sx={{my:3}}>
+    
+     <Box>
+    <main style={{marginTop: 3, marginBottom: 6}}>
+    <div>
+    <Box sx={{display: 'flex'}}>
+    <Typography variant='h5' component='h5' align='center'>
+      EXPERIMENTAL FORCAST PROJECT
+     </Typography>
+     <PaidIcon />
+     </Box>
+      
+      
+      <Typography sx={{color: 'blue'}} align='center'>Forcast based on past winning numbers</Typography>
       {results ?
-      <div>
-      <h1>{results}</h1>
-      </div>: <h1>NONE</h1>
+      <Box sx={{color: 'red', p:3}}>
+      <Typography variant='h4' sx={{fontWeight: 'bold'}} align='center'>{results}</Typography>
+      </Box>: <Typography sx={{color: 'red', p:3}} align='center'>No value to show</Typography>
       }
+      
      </div>
      
-    </div>
+    
 
     <div>
-     <h2>Enter Previous Winning Numbers</h2>
+    <Typography sx={{}}>Enter Previous Winning Numbers Below</Typography>
        
      
      <ul style={{display: 'flex', gap: 2, listStyle: 'none', color: 'green', fontWeight: 'bold', fontSize: 18}}>
-     <li>Past Winning Numbers: </li>
-     <li><span style={{color: 'green'}}>{num1}</span></li>
-     <li><span style={{color: 'red'}}>{num2}</span></li>
-     <li><span style={{color: 'green'}}>{num3}</span></li>
-     <li><span style={{color: 'red'}}>{num4}</span></li>
-     <li><span style={{color: 'green'}}>{num5}</span></li>
+     <li><Typography sx={{color: 'blue'}} align='center'>Past Winning Numbers: </Typography> </li>
+     <li><span style={{color: 'white'}}>{num1}</span></li>
+     <li><span style={{color: 'blue'}}>{num2}</span></li>
+     <li><span style={{color: 'white'}}>{num3}</span></li>
+     <li><span style={{color: 'blue'}}>{num4}</span></li>
+     <li><span style={{color: 'white'}}>{num5}</span></li>
      </ul>
      
     
-    { counters? 
+    {/* { counters? 
      
      <div>
      {counters.map((counter)=>
@@ -105,21 +134,21 @@ function App() {
      </ul>)}
 
      </div>:null
-    }
+    } */}
     
      
 
      <form style={{display: 'flex', flexDirection: 'column', width: 'auto'}}>
       <label for='Number 1'>Number 1</label><br/>
-      <input  onChange={(e)=>setNum1(e.target.value)} value={num1} name={num1}  required/><br/>
+      <TextField label="Number 1"  onChange={(e)=>setNum1(e.target.value)} value={num1} name={num1}  required/><br/>
       <label for='Number 2'>Number 2</label><br/>
-      <input onChange={(e)=>setNum2(e.target.value)} value={num2} name={num2}  required/><br/>
+      <TextField label="Number 2" onChange={(e)=>setNum2(e.target.value)} value={num2} name={num2}  required/><br/>
       <label for='Number 3'>Number 3</label><br/>
-      <input onChange={(e)=>setNum3(e.target.value)} value={num3} name={num3}  required/><br/>
+      <TextField label="Number 3" onChange={(e)=>setNum3(e.target.value)} value={num3} name={num3}  required/><br/>
       <label for='Number 4'>Number 4</label><br/>
-      <input onChange={(e)=>setNum4(e.target.value)} value={num4} name={num4}  required/><br/>
+      <TextField label="Number 4" onChange={(e)=>setNum4(e.target.value)} value={num4} name={num4}  required/><br/>
       <label for='Number 1'>Number 5</label><br/>
-      <input onChange={(e)=>setNum5(e.target.value)} value={num5} name={num5}  required/>
+      <TextField label="Number 5" onChange={(e)=>setNum5(e.target.value)} value={num5} name={num5}  required/>
      </form>
      </div>
 
@@ -151,17 +180,24 @@ function App() {
      </div> */}
      
 
-     <button onClick={getLottoCounter} style={{
-      backgroundColor: 'green', 
-      color: 'white', width:'100%', 
-      padding:14, marginTop: 3, marginBottom:3}}>
-     PREDICT</button>
+     <Button onClick={getLottoCounter} 
+     variant='contained'
+     fullWidth
+     >
+     PREDICT</Button>
 
      
 
      </main>
+     </Box>
+    </Grid>
 
-
+    
+    
+    </Grid>
+    <Footer />
+    </ThemeProvider>
+    
     </div>
   )
 }

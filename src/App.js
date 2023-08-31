@@ -3,11 +3,13 @@ import {ThemeProvider, Typography, createTheme, Box, TextField, Button, Grid} fr
 import PaidIcon from '@mui/icons-material/Paid';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import Nav from './components/Nav'
-import Footer from './components/Footer';
+import Footer from './pages/Footer';
+import { RenderData } from './components/Data/RenderData';
 
 
 
-function App() {
+function App(props) {
+
 
   const [num1, setNum1] = useState(null)
   const [num2, setNum2] = useState(null)
@@ -20,7 +22,19 @@ function App() {
   const [num9, setNum9] = useState(0)
   const [num10, setNum10] = useState(0)
   const [results, setResults] = useState(null)
-  const [counters, setCounters] = useState([])
+  const [resultHistory, setResultHistory] = useState([])
+  const [message, setMessage] = useState("")
+
+  const totalHistory = resultHistory.length
+
+  const runMatch = ()=>{
+    if(totalHistory < 5)
+    setMessage("Total History wins must be higher than 5 to run a match")
+    if(totalHistory > 5)
+    setMessage("Match run currently not available")
+    
+  }
+  
 
   const payload = {
     num1: parseInt(num1),
@@ -48,6 +62,9 @@ function App() {
    }
 
   const getLottoCounter = async ()=>{
+    if(totalHistory > 10)
+    setMessage("You cannot predict more than 10 values")
+    
     await fetch(BASE_ENDPOINT.something, {
       method: 'POST',
       mode: 'cors',
@@ -61,9 +78,11 @@ function App() {
     .then((data)=>{
       console.log(data)
       setResults(data.message)
-      setCounters(data.counters)
+      setResultHistory((prevResult)=>[...prevResult, data.message])
     })
   }
+
+
 
     const theme = createTheme({
       palette: {
@@ -73,7 +92,8 @@ function App() {
   
   return (
     <div>
-    
+     
+  
     <ThemeProvider theme={theme}>
     <Nav />
     
@@ -99,9 +119,16 @@ function App() {
       
       
       <Typography sx={{color: 'blue'}} align='center'>Forcast based on past winning numbers</Typography>
+      <Typography sx={{color: 'green', fontSize: 20}} align='center'>{message}</Typography>
       {results ?
       <Box sx={{color: 'red', p:3}}>
       <Typography variant='h4' sx={{fontWeight: 'bold'}} align='center'>{results}</Typography>
+      <Typography sx={{color: 'blue'}} align='center'>History of past winning numbers</Typography>
+      <Box sx={{overflowX: 'hidden', maxWidth: 'xs'}}>
+      <Typography variant='h4' sx={{fontWeight: 'bold', fontSize: 18}} align='center'>{resultHistory}</Typography>
+      </Box>
+      <Typography>Total History Wins = {totalHistory}</Typography>
+      <Button onClick={runMatch} variant='contained' fullWidth>RUN MATCH</Button>
       </Box>: <Typography sx={{color: 'red', p:3}} align='center'>No value to show</Typography>
       }
       
@@ -136,7 +163,11 @@ function App() {
      </div>:null
     } */}
     
-     
+    <Button onClick={getLottoCounter} 
+     variant='contained'
+     fullWidth
+     >
+     PREDICT</Button>
 
      <form style={{display: 'flex', flexDirection: 'column', width: 'auto'}}>
       <label for='Number 1'>Number 1</label><br/>
@@ -195,6 +226,7 @@ function App() {
     
     
     </Grid>
+  
     <Footer />
     </ThemeProvider>
     

@@ -53,13 +53,10 @@ function App(props) {
 
    const BASE_URL = process.env.REACT_APP_BASE_URL
    const BASE_ENDPOINT = {
-     something: `${BASE_URL}/api/lotto/`
+     something: `${BASE_URL}/lotto/`
    }
   
-   const LOCAL_HOST_URL = process.env.REACT_APP_LOCAL_HOST_URL
-   const LOCAL_ENDPOINT = {
-     something: `${LOCAL_HOST_URL}/api/lotto/`
-   }
+  
 
   const getLottoCounter = async ()=>{
     if(totalHistory > 10)
@@ -76,9 +73,11 @@ function App(props) {
       return res.json()
     })
     .then((data)=>{
+      if (data){
       console.log(data)
       setResults(data.message)
       setResultHistory((prevResult)=>[...prevResult, data.message])
+      }
     })
   }
 
@@ -86,7 +85,7 @@ function App(props) {
 
     const theme = createTheme({
       palette: {
-        mode: 'dark'
+        mode: 'light'
       }
     })
   
